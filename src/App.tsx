@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Landing, About, Portfolio, Contact } from "./routes/index.ts";
 import "./core-ui/Styles.sass";
 import './routes/about/About.sass'
