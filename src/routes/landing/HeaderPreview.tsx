@@ -6,7 +6,7 @@ const HeaderPreview = () => {
       <h1 className="header-font white-text h1-tag">
         Hi, I'm <br></br>
         <em className="blue-text">Mario Vargas</em>
-        <br></br>web developer
+        <br></br>Warlock Developer 
       </h1>
       <p className="gray-text p-tag">FullStack Developer</p>
       <Link className="blue-text" to="/portfolio">
