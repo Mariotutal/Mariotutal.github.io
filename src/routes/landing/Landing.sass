@@ -1,0 +1,114 @@
+@use  "../../core-ui/_base"
+
+//MAIN PAGE
+.main-page
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    margin-top: 20%
+    @media (min-width: base.$lg-width)
+        grid-column: span 3
+        margin-top: 2%
+
+//HEADER
+.header
+    padding: 1.5rem
+    display: flex
+    flex-direction: column
+    h1
+        font-size: 3.8rem
+        letter-spacing: 1px
+        em
+            letter-spacing: 2px
+    a
+        background-color: transparent
+        border-width: 1px
+        border-color: base.$blueish
+        border-style: solid
+        letter-spacing: 1px
+        padding: 1rem
+        letter-spacing: 1px
+        width: 15rem
+        max-width: 50%
+        text-align: center
+        font-family: base.$body-font
+        opacity: 0.9
+        background: linear-gradient(to right, base.$white 50%, transparent 50%)
+        background-size: 200% 100%
+        background-position: right bottom
+        transition: all 0.4s ease
+
+    @media (min-width: base.$sm-width)
+        h1
+            font-size: 5rem
+        p
+            font-size: 1.5rem
+        a
+            font-size: 1.5rem
+    @media (min-width: base.$xl-width)
+        h1
+            font-size: 6rem
+//
+.contact-me
+    display: flex
+    flex-direction: column
+    gap: 2rem
+    margin-top: 20%
+
+    @media (min-width: base.$lg-width)
+        grid-column: span 3
+        margin-top: 2%
+
+    h2
+        font-size: 3.8rem
+        letter-spacing: 1px
+
+        em
+            letter-spacing: 2px
+
+    .contact-info
+        h3
+            font-size: 1.8rem
+            margin-bottom: 0.5rem
+            color: base.$blueish
+
+        p
+            font-size: 1.5rem
+            margin-bottom: 1rem
+            color: base.$white
+
+        a
+            background-color: transparent
+            color: base.$blueish
+            padding: 1rem
+            width: 15rem
+            max-width: 50%
+            text-align: center
+            font-family: base.$body-font
+            opacity: 0.9
+            background: linear-gradient(to right, base.$white 50%, transparent 50%)
+            background-size: 200% 100%
+            background-position: right bottom
+            transition: all 0.4s ease
+
+        &:hover
+            background-position: left bottom
+            opacity: 1
+
+    @media (min-width: base.$sm-width)
+        h2
+            font-size: 5rem
+
+        .contact-info
+            h3
+                font-size: 2rem
+
+            p
+                font-size: 1.5rem
+
+            a
+                font-size: 1.5rem
+
+    @media (min-width: base.$xl-width)
+        h2
+            font-size: 6rem

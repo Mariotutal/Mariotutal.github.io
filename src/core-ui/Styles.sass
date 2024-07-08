@@ -1,0 +1,32 @@
+@use "base"
+
+// Mixin for Scroll Button Styles
+@mixin scroll-button-styles
+    border-radius: 50%
+    border: 1px solid base.$white
+    position: fixed
+    right: 10px
+    bottom: 150px
+    transition: right 0.5s
+    cursor: pointer
+    font-size: 20px
+    padding: 1.3rem
+    background-color: base.$black-bg
+    backdrop-filter: blur(5px)
+    opacity: 0.2
+    background-position: center
+    background-repeat: no-repeat
+    background-size: 35%
+
+// Root Styles
+#root
+    position: relative
+
+    @media (min-width: base.$lg-width)
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+
+// Scroll Button
+.scroll-button
+    @include scroll-button-styles
+    background-image: url("../assets/images/scroll-btn.png")

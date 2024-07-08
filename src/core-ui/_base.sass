@@ -1,0 +1,101 @@
+@import './_variables.sass'
+// Hide Scrollbar
+html::-webkit-scrollbar
+    width: 0 !important
+
+html
+    -ms-overflow-style: none
+    scrollbar-width: none
+
+// Basic Styles
+body
+    background-color: $black-bg
+    position: relative
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    font-family: $body-font
+
+img
+    display: block
+
+a
+    text-decoration: none
+    cursor: pointer
+
+h1, h2, h3, h4
+    margin: 0
+    position: relative
+
+ul, ol
+    padding: 0
+    margin: 0
+
+li
+    list-style: none
+
+button
+    cursor: pointer
+
+p
+    font-family: $body-font
+    font-weight: 100
+
+// Utility Classes
+.title-font
+    font-family: $title-font
+    font-weight: 500
+
+.header-font
+    font-family: $title-font
+
+.white-text
+    color: $white
+
+.blue-text
+    color: $blueish
+
+.gray-text
+    color: $gray
+
+// Tag Styling
+.h1-tag:before,
+.h1-tag:after,
+.h2-tag:before,
+.h2-tag:after,
+.h3-tag:before,
+.h3-tag:after,
+.p-tag:before,
+.p-tag:after,
+.section-tag:before,
+.section-tag:after,
+.ol-tag:before,
+.ol-tag:after,
+.form-tag:before,
+.form-tag:after
+    display: block
+    font-size: 2rem
+    color: $gray
+    font-family: $coding-font
+    opacity: 0.3
+
+.h2-tag:before, .h3-tag:before, .h1-tag:before, .p-tag:before, .ol-tag:before, .form-tag:before
+    margin-top: 2rem
+
+.h2-tag:after, .h3-tag:after, .h1-tag:after, .p-tag:after, .ol-tag:after, .form-tag:after
+    display: inline
+    margin-left: 2rem
+
+.p-tag:before, .p-tag:after, .ol-tag:before, .ol-tag:after, .form-tag:before, .form-tag:after
+    font-size: 1.5rem
+
+.section-tag:before
+    position: absolute
+    transform: translate(0, -30%)
+    margin-top: -2rem
+
+.section-tag:after
+    position: absolute
+    transform: translate(0, -110%)
+    top: 110%
+    right: 0
