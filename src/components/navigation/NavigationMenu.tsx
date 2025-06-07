@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
-import ScrollToTop from "../../helpers/ScrollToTop";
+import scrollToTop from "../../helpers/ScrollToTop";
 
 const activeNavLink = ({ isActive }) => 
   `gray-text nav-link${isActive ? " active" : ""}`;
 
 const NavigationMenu = ({ closeMenu }) => {
   const handleClick = () => {
-    ScrollToTop();
+    scrollToTop();
     closeMenu();
   };
 

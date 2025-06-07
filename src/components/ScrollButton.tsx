@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./Button";
-import ScrollToTop from "../helpers/ScrollToTop";
+import scrollToTop from "../helpers/ScrollToTop";
 
 const ScrollButton = () => {
   const [visible, setVisible] = useState(false);
@@ -18,7 +18,7 @@ const ScrollButton = () => {
   return (
     <Button
       className="scroll-button"
-      onClick={ScrollToTop}
+      onClick={scrollToTop}
       style={{ display: visible ? "inline" : "none" }}
     />
   );
