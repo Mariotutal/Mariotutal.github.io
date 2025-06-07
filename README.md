@@ -14,6 +14,8 @@ The following npm scripts are available:
 - `dev` – start the development server.
 - `build` – generate a production build.
 - `preview` – preview the production build locally.
+- `lint` – run ESLint on the project sources.
+- `format` – run Prettier to format all files.
 - `deploy` – publish the built site to GitHub Pages.
 
 ## Expanding the ESLint configuration
