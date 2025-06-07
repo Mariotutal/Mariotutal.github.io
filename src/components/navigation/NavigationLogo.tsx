@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import IconBlack from "../../assets/images/icon-black.png";
-import ScrollToTop from "../../helpers/ScrollToTop";
+import scrollToTop from "../../helpers/ScrollToTop";
 
 const NavigationLogo = (props) => {
   return (
@@ -8,7 +8,7 @@ const NavigationLogo = (props) => {
       to="/"
       className="logo-section"
       onClick={() => {
-        ScrollToTop();
+        scrollToTop();
         props.closeMenu();
       }}
     >
