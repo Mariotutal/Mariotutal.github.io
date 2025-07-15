@@ -92,7 +92,7 @@
 }
 
 .responsibilityItem::before {
-  content: "•";
+  content: '•';
   color: #00d4ff;
   position: absolute;
   left: 0;
@@ -127,25 +127,25 @@
     padding: 16px;
     gap: 16px;
   }
-  
+
   .jobTitle {
     font-size: 1.1rem;
   }
-  
+
   .companyName {
     font-size: 1rem;
   }
-  
+
   .jobInfo {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .responsibilityItem {
     font-size: 0.8rem;
   }
-  
+
   .toolTag {
     font-size: 0.7rem;
   }
-} 
+}

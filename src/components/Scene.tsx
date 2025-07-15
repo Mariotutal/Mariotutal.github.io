@@ -3,7 +3,7 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, OrthographicCamera } from '@react-three/drei';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import {TIN, TINControls} from './TIN';
+import { TIN, TINControls } from './TIN';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 
@@ -20,7 +20,7 @@ export default function Scene() {
     resolution: 60,
     amplitude: 2.5,
     speed: 0.02,
-    wireframe: true
+    wireframe: true,
   });
 
   const [showAxis, setShowAxis] = useState(false);
@@ -31,14 +31,14 @@ export default function Scene() {
     const handleResize = () => {
       if (cameraRef.current) {
         const aspect = window.innerWidth / window.innerHeight;
-        
+
         // Update orthographic camera bounds based on aspect ratio
         const frustumSize = 40; // Base frustum size
-        cameraRef.current.left = -frustumSize * aspect / 2;
-        cameraRef.current.right = frustumSize * aspect / 2;
+        cameraRef.current.left = (-frustumSize * aspect) / 2;
+        cameraRef.current.right = (frustumSize * aspect) / 2;
         cameraRef.current.top = frustumSize / 2;
         cameraRef.current.bottom = -frustumSize / 2;
-        
+
         // Update projection matrix
         cameraRef.current.updateProjectionMatrix();
       }
@@ -46,28 +46,31 @@ export default function Scene() {
 
     // Set initial camera bounds
     handleResize();
-    
+
     // Add event listener for resize
     window.addEventListener('resize', handleResize);
-    
+
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  const handleParameterChange = useCallback((parameter: string, value: number) => {
-    setTinParams(prev => {
-      const newParams = { ...prev, [parameter]: value };
-      
-      // Force re-render if resolution changes (affects geometry)
-      if (parameter === 'resolution') {
-        setKey(prevKey => prevKey + 1);
-      }
-      
-      return newParams;
-    });
-  }, []);
+  const handleParameterChange = useCallback(
+    (parameter: string, value: number) => {
+      setTinParams(prev => {
+        const newParams = { ...prev, [parameter]: value };
+
+        // Force re-render if resolution changes (affects geometry)
+        if (parameter === 'resolution') {
+          setKey(prevKey => prevKey + 1);
+        }
+
+        return newParams;
+      });
+    },
+    []
+  );
 
   const handleWireframeToggle = useCallback((wireframe: boolean) => {
     setTinParams(prev => ({ ...prev, wireframe }));
@@ -82,7 +85,7 @@ export default function Scene() {
       resolution: 60,
       amplitude: 2.5,
       speed: 0.02,
-      wireframe: true
+      wireframe: true,
     });
     setShowAxis(false);
     setKey(prevKey => prevKey + 1);
@@ -106,7 +109,7 @@ export default function Scene() {
               top={20}
               bottom={-20}
             />
-            
+
             {/* Enhanced lighting setup */}
             <ambientLight intensity={0.4} />
             <directionalLight
@@ -121,14 +124,22 @@ export default function Scene() {
               shadow-camera-top={15}
               shadow-camera-bottom={-15}
             />
-            <pointLight position={[-10, 15, -10]} intensity={0.2} color="#4CAF50" />
-            <pointLight position={[10, 15, 10]} intensity={0.2} color="#2196F3" />
-            
+            <pointLight
+              position={[-10, 15, -10]}
+              intensity={0.2}
+              color="#4CAF50"
+            />
+            <pointLight
+              position={[10, 15, 10]}
+              intensity={0.2}
+              color="#2196F3"
+            />
+
             {/* Static axis helper for reference (toggleable) */}
             {showAxis && <axesHelper args={[3]} />}
-            
+
             {/* TIN Component with dynamic parameters */}
-            <TIN 
+            <TIN
               key={key}
               width={25}
               height={25}
@@ -137,7 +148,7 @@ export default function Scene() {
               speed={tinParams.speed}
               wireframe={tinParams.wireframe}
             />
-            
+
             {/* Restricted camera controls for 2D-like interaction */}
             <OrbitControls
               enableDamping
@@ -153,7 +164,7 @@ export default function Scene() {
           </Suspense>
         </Canvas>
       </div>
-      
+
       {/* Control panel */}
       <TINControls
         onParameterChange={handleParameterChange}
@@ -161,8 +172,8 @@ export default function Scene() {
         onAxisToggle={handleAxisToggle}
         onReset={handleReset}
       />
-      
+
       {/* <Overlay /> */}
     </>
   );
-} 
+}

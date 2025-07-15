@@ -11,11 +11,15 @@ export const EmblaCarousel = memo<CarouselProps>(({ experiences, options }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   return (
-    <section className={styles.embla} role="region" aria-label="Experience carousel">
+    <section
+      className={styles.embla}
+      role="region"
+      aria-label="Experience carousel"
+    >
       <div className={styles.viewport} ref={emblaRef}>
         <div className={styles.container}>
           {experiences.map((experience, index) => (
-            <div 
+            <div
               key={`experience-${experience.id}`}
               className={styles.slide}
               role="group"
@@ -32,4 +36,4 @@ export const EmblaCarousel = memo<CarouselProps>(({ experiences, options }) => {
   );
 });
 
-EmblaCarousel.displayName = 'EmblaCarousel'; 
+EmblaCarousel.displayName = 'EmblaCarousel';

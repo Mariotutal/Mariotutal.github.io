@@ -62,7 +62,7 @@
   font-size: 14px;
 }
 
-.control input[type="range"] {
+.control input[type='range'] {
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
@@ -71,25 +71,25 @@
   -webkit-appearance: none;
 }
 
-.control input[type="range"]::-webkit-slider-thumb {
+.control input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  background: #4CAF50;
+  background: #4caf50;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.control input[type="range"]::-moz-range-thumb {
+.control input[type='range']::-moz-range-thumb {
   width: 16px;
   height: 16px;
-  background: #4CAF50;
+  background: #4caf50;
   border-radius: 50%;
   cursor: pointer;
   border: none;
 }
 
-.control input[type="checkbox"] {
+.control input[type='checkbox'] {
   margin-right: 8px;
 }
 
@@ -107,4 +107,4 @@
 
 .resetBtn:hover {
   background: #d32f2f;
-} 
+}

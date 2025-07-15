@@ -18,7 +18,8 @@ export const CarouselControls = ({ emblaApi }: CarouselControlsProps) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
 
   return (
     <div className={styles.controls}>
@@ -31,7 +32,7 @@ export const CarouselControls = ({ emblaApi }: CarouselControlsProps) => {
         >
           <PrevIcon />
         </CarouselButton>
-        
+
         <CarouselButton
           variant="next"
           onClick={onNextButtonClick}
@@ -55,4 +56,4 @@ export const CarouselControls = ({ emblaApi }: CarouselControlsProps) => {
       </div>
     </div>
   );
-}; 
+};

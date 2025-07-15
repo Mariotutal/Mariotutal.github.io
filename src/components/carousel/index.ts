@@ -11,9 +11,9 @@ export { useDotButton } from './hooks/useDotButton';
 export { usePrevNextButtons } from './hooks/usePrevNextButtons';
 
 // Types
-export type { 
-  CarouselProps, 
+export type {
+  CarouselProps,
   Experience,
-  UseDotButtonType, 
-  UsePrevNextButtonsType 
+  UseDotButtonType,
+  UsePrevNextButtonsType,
 } from './types';

@@ -48,4 +48,4 @@ const ExperienceCard = memo<ExperienceCardProps>(({ experience }) => {
 
 ExperienceCard.displayName = 'ExperienceCard';
 
-export default ExperienceCard; 
+export default ExperienceCard;

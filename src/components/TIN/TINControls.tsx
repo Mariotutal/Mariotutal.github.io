@@ -10,11 +10,11 @@ interface TINControlsProps {
   onReset: () => void;
 }
 
-export default function TINControls({ 
-  onParameterChange, 
-  onWireframeToggle, 
+export default function TINControls({
+  onParameterChange,
+  onWireframeToggle,
   onAxisToggle,
-  onReset 
+  onReset,
 }: TINControlsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [wireframe, setWireframe] = useState(false);
@@ -34,17 +34,14 @@ export default function TINControls({
 
   return (
     <div className={styles.controls}>
-      <button 
-        className={styles.toggle}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className={styles.toggle} onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? '✕' : '⚙️'}
       </button>
-      
+
       {isOpen && (
         <div className={styles.panel}>
           <h3>TIN Controls</h3>
-          
+
           <div className={styles.control}>
             <label>Resolution:</label>
             <input
@@ -52,10 +49,12 @@ export default function TINControls({
               min="20"
               max="100"
               defaultValue="60"
-              onChange={(e) => onParameterChange('resolution', parseInt(e.target.value))}
+              onChange={e =>
+                onParameterChange('resolution', parseInt(e.target.value))
+              }
             />
           </div>
-          
+
           <div className={styles.control}>
             <label>Amplitude:</label>
             <input
@@ -64,10 +63,12 @@ export default function TINControls({
               max="5"
               step="0.1"
               defaultValue="2.5"
-              onChange={(e) => onParameterChange('amplitude', parseFloat(e.target.value))}
+              onChange={e =>
+                onParameterChange('amplitude', parseFloat(e.target.value))
+              }
             />
           </div>
-          
+
           <div className={styles.control}>
             <label>Speed:</label>
             <input
@@ -76,10 +77,12 @@ export default function TINControls({
               max="2"
               step="0.1"
               defaultValue="0.4"
-              onChange={(e) => onParameterChange('speed', parseFloat(e.target.value))}
+              onChange={e =>
+                onParameterChange('speed', parseFloat(e.target.value))
+              }
             />
           </div>
-          
+
           <div className={styles.control}>
             <label>
               <input
@@ -90,7 +93,7 @@ export default function TINControls({
               Wireframe Mode
             </label>
           </div>
-          
+
           <div className={styles.control}>
             <label>
               <input
@@ -101,7 +104,7 @@ export default function TINControls({
               Show Axis
             </label>
           </div>
-          
+
           <button className={styles.resetBtn} onClick={onReset}>
             Reset Parameters
           </button>
@@ -109,4 +112,4 @@ export default function TINControls({
       )}
     </div>
   );
-} 
+}

@@ -27,4 +27,4 @@ export interface UsePrevNextButtonsType {
   nextBtnDisabled: boolean;
   onPrevButtonClick: () => void;
   onNextButtonClick: () => void;
-} 
+}

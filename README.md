@@ -5,12 +5,14 @@ An interactive **Triangular Irregular Network (TIN)** simulation with real-time 
 ## 🌟 Features
 
 ### Interactive TIN Visualization
+
 - **Real-time 3D rendering** of triangular irregular networks
 - **Multi-layered wave animation** with sine and cosine functions
 - **Dynamic vertex coloring** based on height variations
 - **Smooth camera controls** with orbit functionality
 
 ### Live Controls
+
 - **Resolution adjustment** (20-100 vertices)
 - **Amplitude control** (0.5-5.0 wave height)
 - **Speed control** (0.1-2.0 animation speed)
@@ -18,6 +20,7 @@ An interactive **Triangular Irregular Network (TIN)** simulation with real-time 
 - **Reset parameters** functionality
 
 ### Technical Implementation
+
 - **Optimized geometry generation** with grid-based triangulation
 - **Efficient animation loop** using React Three Fiber's `useFrame`
 - **Memoized calculations** for performance
@@ -26,23 +29,27 @@ An interactive **Triangular Irregular Network (TIN)** simulation with real-time 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd portfolio
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -77,6 +84,7 @@ src/
 ## 🎛️ Controls
 
 ### Settings Panel
+
 Click the **⚙️** icon in the top-right corner to access:
 
 - **Resolution**: Adjust mesh density (affects performance)
@@ -86,6 +94,7 @@ Click the **⚙️** icon in the top-right corner to access:
 - **Reset**: Restore default parameters
 
 ### Camera Controls
+
 - **Left Click + Drag**: Rotate camera
 - **Right Click + Drag**: Pan camera
 - **Mouse Wheel**: Zoom in/out
@@ -93,13 +102,17 @@ Click the **⚙️** icon in the top-right corner to access:
 ## 🔧 Technical Details
 
 ### TIN Generation
+
 The simulation creates a **Triangular Irregular Network** using:
+
 1. **Grid-based vertex generation** with random offsets
 2. **Delaunay-style triangulation** for mesh creation
 3. **Dynamic vertex positioning** using mathematical wave functions
 
 ### Animation System
+
 Wave movement is calculated using:
+
 ```javascript
 const wave1 = Math.sin(x * 0.3 + time * 2) * amplitude * 0.5;
 const wave2 = Math.cos(z * 0.2 + time * 1.5) * amplitude * 0.3;
@@ -107,6 +120,7 @@ const wave3 = Math.sin((x + z) * 0.15 + time) * amplitude * 0.2;
 ```
 
 ### Performance Optimizations
+
 - **Memoized geometry creation** to prevent unnecessary recalculations
 - **Efficient attribute updates** using Three.js BufferGeometry
 - **Optimized normal calculations** for proper lighting
@@ -115,11 +129,13 @@ const wave3 = Math.sin((x + z) * 0.15 + time) * amplitude * 0.2;
 ## 🎨 Visual Features
 
 ### Lighting Setup
+
 - **Ambient lighting** for overall illumination
 - **Directional lighting** with shadows
 - **Colored point lights** for atmospheric effects
 
 ### Color Dynamics
+
 - **Position-based base colors** for spatial reference
 - **Height-based color variations** during animation
 - **Smooth color transitions** following wave patterns
@@ -127,6 +143,7 @@ const wave3 = Math.sin((x + z) * 0.15 + time) * amplitude * 0.2;
 ## 🔮 Future Enhancements
 
 Potential improvements and features:
+
 - **Texture mapping** for more realistic surfaces
 - **Particle effects** for enhanced visualization
 - **Export functionality** for 3D models
@@ -137,18 +154,21 @@ Potential improvements and features:
 ## 📝 Best Practices Implemented
 
 ### Next.js Best Practices
+
 - **App Router** for modern Next.js architecture
 - **Client-side components** properly marked with `'use client'`
 - **Optimized imports** and code splitting
 - **TypeScript integration** for type safety
 
 ### Three.js Best Practices
+
 - **React Three Fiber** for React integration
 - **Proper cleanup** of Three.js resources
 - **Optimized render loops** with `useFrame`
 - **Memoized expensive calculations**
 
 ### React Best Practices
+
 - **Proper hook usage** with dependencies
 - **Component separation** for maintainability
 - **Callback optimization** with `useCallback`
@@ -157,11 +177,13 @@ Potential improvements and features:
 ## 🐛 Troubleshooting
 
 ### Common Issues
+
 1. **Performance lag**: Lower the resolution setting
 2. **Controls not responding**: Check browser WebGL support
 3. **Build errors**: Ensure all dependencies are installed
 
 ### Browser Support
+
 - Chrome 80+
 - Firefox 78+
 - Safari 14+
