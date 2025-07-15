@@ -1,0 +1,234 @@
+/* Carousel Container */
+.embla {
+  max-width: 48rem;
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+}
+
+/* Viewport */
+.viewport {
+  overflow: hidden;
+  padding:1rem
+}
+
+/* Container */
+.container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+/* Slides */
+.slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+
+.slideContent {
+  background: var(--slide-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slide-height);
+  user-select: none;
+}
+
+.slideNumber {
+  background: var(--slide-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slide-height);
+  user-select: none;
+}
+
+/* Controls */
+.controls {
+  
+  display: flex;
+  grid-template-columns: auto 1fr;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+/* Buttons Container */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+}
+
+/* Button Base Styles */
+.button {
+  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: inset 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 1;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.button:disabled {
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}
+
+.button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 0.2rem rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.buttonPrev,
+.buttonNext {
+  grid-area: auto;
+}
+
+/* Button Icons */
+.buttonSvg {
+  width: 35%;
+  height: 35%;
+}
+
+/* Dots Container */
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Dot Buttons */
+.dot {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 0.2rem solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.dot:active {
+  transform: scale(0.9);
+}
+
+.dotSelected {
+  background: rgba(0, 212, 255, 0.8);
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 212, 255, 0.3);
+}
+
+.dotSelected:hover {
+  background: rgba(0, 212, 255, 0.9);
+  border-color: #00d4ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .embla {
+    --slide-size: 80%;
+    --slide-height: 400px;
+  }
+  
+  .controls {
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+  
+  .button {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .dot {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .embla {
+    --slide-size: 90%;
+    --slide-height: 350px;
+    --slide-spacing: 0.8rem;
+  }
+  
+  .controls {
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  
+  .button {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  
+  .dot {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+/* Focus States for Accessibility */
+.button:focus-visible {
+  outline: 2px solid rgb(138, 180, 248);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .slideNumber,
+  .button,
+  .buttonSvg,
+  .dot:after {
+    transition: none;
+  }
+  
+  .slideNumber:hover,
+  .button:hover,
+  .button:hover .buttonSvg {
+    transform: none;
+  }
+} 
