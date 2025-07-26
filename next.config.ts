@@ -6,15 +6,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // GitHub Pages configuration
   basePath: '',
   assetPrefix: '',
-  
-  // Performance optimizations
+
   poweredByHeader: false,
   compress: true,
-  
-  // TypeScript and ESLint configuration
+
   typescript: {
     ignoreBuildErrors: false,
   },
