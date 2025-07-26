@@ -1,0 +1,286 @@
+@import '../../styles/breakpoints.css';
+
+/* Satoshi Typography Showcase */
+.satoshiShowcase {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: var(--font-satoshi);
+  background: linear-gradient(135deg, #000000 0%, #111111 100%);
+  min-height: 100vh;
+}
+
+/* Weight Demonstrations */
+.weightDemo {
+  margin-bottom: 3rem;
+}
+
+.light {
+  font-weight: 300;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-relaxed);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.regular {
+  font-weight: 400;
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.medium {
+  font-weight: 500;
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.bold {
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.black {
+  font-weight: 900;
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+/* Italic Styles */
+.italic {
+  font-style: italic;
+}
+
+/* Display Headings */
+.heroTitle {
+  font-family: var(--font-satoshi);
+  font-weight: 900;
+  font-size: var(--text-5xl);
+  line-height: var(--leading-tight);
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: var(--font-satoshi);
+  font-weight: 300;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-relaxed);
+  color: #cccccc;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Body Text Examples */
+.bodyExample {
+  font-family: var(--font-satoshi);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: #cccccc;
+  margin-bottom: 1.5rem;
+  max-width: 65ch;
+}
+
+.bodyLarge {
+  font-family: var(--font-satoshi);
+  font-weight: 300;
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: #ffffff;
+  margin-bottom: 2rem;
+  max-width: 60ch;
+}
+
+/* UI Elements */
+.button {
+  font-family: var(--font-satoshi);
+  font-weight: 500;
+  font-size: var(--text-base);
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+}
+
+.buttonOutline {
+  background: transparent;
+  border: 2px solid #00d4ff;
+  color: #00d4ff;
+}
+
+.buttonOutline:hover {
+  background: #00d4ff;
+  color: #000000;
+}
+
+/* Variable Font Weight Animation */
+.variableWeight {
+  font-family: var(--font-satoshi);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  color: #00d4ff;
+  animation: weightCycle 4s ease-in-out infinite;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+@keyframes weightCycle {
+  0%,
+  100% {
+    font-weight: 300;
+  }
+  25% {
+    font-weight: 500;
+  }
+  50% {
+    font-weight: 700;
+  }
+  75% {
+    font-weight: 900;
+  }
+}
+
+/* Responsive Typography */
+@media (--max-mobile) {
+  .satoshiShowcase {
+    padding: 1rem 0.75rem;
+  }
+
+  .heroTitle {
+    font-size: var(--text-4xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-xl);
+  }
+
+  .light,
+  .regular,
+  .medium,
+  .bold,
+  .black {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (--tablet) {
+  .satoshiShowcase {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (--desktop) {
+  .satoshiShowcase {
+    padding: 4rem 2rem;
+  }
+
+  .heroTitle {
+    font-size: 4rem;
+  }
+}
+
+/* Feature Grid */
+.featureGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+@media (--tablet) {
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (--desktop) {
+  .featureGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.featureCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateY(-4px);
+}
+
+.featureTitle {
+  font-family: var(--font-satoshi);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.featureDescription {
+  font-family: var(--font-satoshi);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: #cccccc;
+}
+
+/* Code Integration */
+.codeExample {
+  font-family: var(--font-geist-mono);
+  font-size: var(--text-sm);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  color: #00d4ff;
+  overflow-x: auto;
+}
+
+/* Accessibility */
+@media (--reduced-motion) {
+  .variableWeight {
+    animation: none;
+    font-weight: 500;
+  }
+
+  .button,
+  .featureCard {
+    transition: none;
+  }
+
+  .button:hover,
+  .featureCard:hover {
+    transform: none;
+  }
+}

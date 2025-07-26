@@ -1,0 +1,37 @@
+/* ========================================
+   BREAKPOINTS
+   Centralized responsive breakpoints using 
+   PostCSS custom media queries
+   ======================================== */
+
+/* Mobile First Approach */
+@custom-media --mobile (min-width: 320px);
+@custom-media --mobile-large (min-width: 425px);
+@custom-media --tablet (min-width: 768px);
+@custom-media --tablet-large (min-width: 1024px);
+@custom-media --desktop (min-width: 1280px);
+@custom-media --desktop-large (min-width: 1440px);
+@custom-media --desktop-xl (min-width: 1920px);
+
+/* Max-width breakpoints for content constraints */
+@custom-media --max-mobile (max-width: 767px);
+@custom-media --max-tablet (max-width: 1023px);
+@custom-media --max-desktop (max-width: 1279px);
+
+/* Range breakpoints */
+@custom-media --mobile-only (min-width: 320px) and (max-width: 767px);
+@custom-media --tablet-only (min-width: 768px) and (max-width: 1023px);
+@custom-media --desktop-only (min-width: 1024px) and (max-width: 1279px);
+
+/* Special cases */
+@custom-media --touch (hover: none) and (pointer: coarse);
+@custom-media --no-touch (hover: hover) and (pointer: fine);
+@custom-media --landscape (orientation: landscape);
+@custom-media --portrait (orientation: portrait);
+@custom-media --reduced-motion (prefers-reduced-motion: reduce);
+@custom-media --dark-mode (prefers-color-scheme: dark);
+@custom-media --light-mode (prefers-color-scheme: light);
+
+/* High DPI displays */
+@custom-media --retina (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi);

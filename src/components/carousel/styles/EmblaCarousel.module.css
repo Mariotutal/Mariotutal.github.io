@@ -1,3 +1,5 @@
+@import '../../../styles/breakpoints.css';
+
 /* Carousel Container */
 .embla {
   max-width: 48rem;
@@ -38,6 +40,8 @@
   align-items: center;
   justify-content: center;
   height: var(--slide-height);
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 
@@ -51,6 +55,8 @@
   align-items: center;
   justify-content: center;
   height: var(--slide-height);
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 
@@ -93,6 +99,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.1);
 }
@@ -137,10 +144,11 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 0.2rem solid rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
 }
 
 .dot:hover {
@@ -165,7 +173,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (--max-tablet) {
   .embla {
     --slide-size: 80%;
     --slide-height: 400px;
@@ -187,7 +195,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (--max-mobile) {
   .embla {
     --slide-size: 90%;
     --slide-height: 350px;
@@ -217,7 +225,7 @@
 }
 
 /* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
+@media (--reduced-motion) {
   .slideNumber,
   .button,
   .buttonSvg,

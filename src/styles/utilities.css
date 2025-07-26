@@ -1,0 +1,405 @@
+@import './breakpoints.css';
+
+/* ========================================
+   RESPONSIVE UTILITIES
+   Reusable utility classes for common
+   responsive patterns
+   ======================================== */
+
+/* Container Utilities */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (--tablet) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (--desktop) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+.containerFluid {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (--tablet) {
+  .containerFluid {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Grid Utilities */
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.gridCols1 {
+  grid-template-columns: 1fr;
+}
+
+@media (--tablet) {
+  .gridCols2Tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gridCols3Tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (--desktop) {
+  .gridCols2Desktop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gridCols3Desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .gridCols4Desktop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Spacing Utilities */
+.spacing {
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+@media (--tablet) {
+  .spacing {
+    --spacing-md: 1.25rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 2.5rem;
+    --spacing-2xl: 4rem;
+  }
+}
+
+@media (--desktop) {
+  .spacing {
+    --spacing-lg: 2.5rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 5rem;
+  }
+}
+
+/* Typography Utilities */
+.textSm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.textBase {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.textLg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.textXl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+@media (--tablet) {
+  .textLg {
+    font-size: 1.25rem;
+  }
+  .textXl {
+    font-size: 1.5rem;
+  }
+  .text2xl {
+    font-size: 1.875rem;
+  }
+  .text3xl {
+    font-size: 2.25rem;
+  }
+}
+
+@media (--desktop) {
+  .textXl {
+    font-size: 1.75rem;
+  }
+  .text2xl {
+    font-size: 2.25rem;
+  }
+  .text3xl {
+    font-size: 3rem;
+  }
+}
+
+/* Visibility Utilities */
+.hiddenMobile {
+  display: none;
+}
+
+@media (--tablet) {
+  .hiddenMobile {
+    display: block;
+  }
+}
+
+.hiddenTablet {
+  display: block;
+}
+
+@media (--tablet) {
+  .hiddenTablet {
+    display: none;
+  }
+}
+
+@media (--desktop) {
+  .hiddenTablet {
+    display: block;
+  }
+}
+
+.hiddenDesktop {
+  display: block;
+}
+
+@media (--desktop) {
+  .hiddenDesktop {
+    display: none;
+  }
+}
+
+.showMobileOnly {
+  display: block;
+}
+
+@media (--tablet) {
+  .showMobileOnly {
+    display: none;
+  }
+}
+
+.showTabletOnly {
+  display: none;
+}
+
+@media (--tablet-only) {
+  .showTabletOnly {
+    display: block;
+  }
+}
+
+.showDesktopOnly {
+  display: none;
+}
+
+@media (--desktop) {
+  .showDesktopOnly {
+    display: block;
+  }
+}
+
+/* Flex Utilities */
+.flex {
+  display: flex;
+}
+
+.flexCol {
+  flex-direction: column;
+}
+
+.flexWrap {
+  flex-wrap: wrap;
+}
+
+.itemsCenter {
+  align-items: center;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
+
+.justifyBetween {
+  justify-content: space-between;
+}
+
+.justifyAround {
+  justify-content: space-around;
+}
+
+/* Responsive Flex Direction */
+.flexColMobile {
+  flex-direction: column;
+}
+
+@media (--tablet) {
+  .flexColMobile {
+    flex-direction: row;
+  }
+}
+
+.flexRowTablet {
+  flex-direction: column;
+}
+
+@media (--tablet) {
+  .flexRowTablet {
+    flex-direction: row;
+  }
+}
+
+/* Padding Utilities */
+.p1 {
+  padding: 0.25rem;
+}
+.p2 {
+  padding: 0.5rem;
+}
+.p3 {
+  padding: 0.75rem;
+}
+.p4 {
+  padding: 1rem;
+}
+.p6 {
+  padding: 1.5rem;
+}
+.p8 {
+  padding: 2rem;
+}
+
+@media (--tablet) {
+  .p4 {
+    padding: 1.25rem;
+  }
+  .p6 {
+    padding: 2rem;
+  }
+  .p8 {
+    padding: 2.5rem;
+  }
+}
+
+@media (--desktop) {
+  .p6 {
+    padding: 2.5rem;
+  }
+  .p8 {
+    padding: 3rem;
+  }
+}
+
+/* Margin Utilities */
+.m1 {
+  margin: 0.25rem;
+}
+.m2 {
+  margin: 0.5rem;
+}
+.m3 {
+  margin: 0.75rem;
+}
+.m4 {
+  margin: 1rem;
+}
+.m6 {
+  margin: 1.5rem;
+}
+.m8 {
+  margin: 2rem;
+}
+
+.mx4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.my4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (--tablet) {
+  .m4 {
+    margin: 1.25rem;
+  }
+  .m6 {
+    margin: 2rem;
+  }
+  .m8 {
+    margin: 2.5rem;
+  }
+  .mx4 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+  .my4 {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Accessibility Utilities */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focusVisible:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Utilities */
+@media (--reduced-motion) {
+  .motionSafe {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .motionSafe:hover,
+  .motionSafe:focus {
+    transform: none !important;
+  }
+}
+
+/* Touch Device Utilities */
+@media (--touch) {
+  .touchDevice .hoverOnly {
+    display: none;
+  }
+}
+
+@media (--no-touch) {
+  .noTouch .touchOnly {
+    display: none;
+  }
+}
