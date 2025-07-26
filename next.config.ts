@@ -1,18 +1,26 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
+  // GitHub Pages configuration
   basePath: '',
   assetPrefix: '',
-  // Development configuration
-  ...(process.env.NODE_ENV === 'development' && {
-    allowedDevOrigins: ['10.17.177.95', 'localhost', '127.0.0.1'],
-  }),
+  
+  // Performance optimizations
+  poweredByHeader: false,
+  compress: true,
+  
+  // TypeScript and ESLint configuration
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
 };
 
 export default nextConfig;
