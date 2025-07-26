@@ -1,3 +1,5 @@
+@import '../../styles/breakpoints.css';
+
 .overlay {
   position: fixed;
   top: 0;
@@ -16,4 +18,19 @@
   font-size: 48px;
   font-weight: bold;
   text-align: center;
+}
+
+@media (--tablet) {
+  .text {
+    font-size: 36px;
+  }
+  .overlay {
+    flex-direction: column;
+  }
+}
+
+@media (--mobile) {
+  .text {
+    font-size: 24px;
+  }
 }

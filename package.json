@@ -29,6 +29,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "eslint-config-prettier": "^9.1.0",
+    "postcss-custom-media": "^11.0.6",
+    "postcss-import": "^16.1.1",
     "prettier": "^3.4.2",
     "typescript": "^5"
   }
