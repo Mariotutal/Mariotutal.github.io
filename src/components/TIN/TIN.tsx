@@ -40,7 +40,7 @@ const TIN_CONFIG = {
     // Default mesh dimensions
     defaultWidth: 20,
     defaultHeight: 20,
-    defaultResolution: 50,
+    defaultResolution: 25, // Reduced from 50 to make lines wider (doubled line width)
     defaultAmplitude: 2,
     defaultSpeed: 0.5,
 
@@ -53,31 +53,69 @@ const TIN_CONFIG = {
 
   // Color generation and mapping parameters
   colors: {
-    // Initial color generation based on position
+    /**
+     * INITIAL COLOR GENERATION (Static Position-Based Colors)
+     * ======================================================
+     *
+     * These colors are assigned once when the mesh is created, based on each vertex's
+     * position in the XZ plane. This creates a static color gradient across the fabric.
+     *
+     * COLOR MAPPING FORMULA:
+     * - Red:   base + (normalizedX * multiplier) → Creates horizontal gradient
+     * - Green: base + (normalizedZ * multiplier) → Creates depth gradient
+     * - Blue:  base - (normalizedX * multiplier) → Creates inverse horizontal gradient
+     *
+     * VISUAL EFFECT:
+     * - Creates a warm-to-cool color transition from left to right
+     * - Adds depth perception with green component varying by Z position
+     * - Results in a natural fabric-like color variation
+     */
     baseColor: {
       red: {
-        base: 0.2,
-        multiplier: 0.6,
+        base: 0.4, // Brighter minimum red value (was 0.2)
+        multiplier: 0.5, // How much red increases across X-axis (was 0.6)
       },
       green: {
-        base: 0.4,
-        multiplier: 0.4,
+        base: 0.6, // Brighter base green value (was 0.4)
+        multiplier: 0.4, // How much green varies with Z position (was 0.4)
       },
       blue: {
-        base: 0.8,
-        multiplier: 0.3,
+        base: 1.0, // Maximum blue value (was 0.8)
+        multiplier: 0.5, // How much blue decreases across X-axis (was 0.3)
       },
     },
 
-    // Dynamic color mapping based on height
+    /**
+     * DYNAMIC HEIGHT-BASED COLOR MAPPING (Animation-Time Colors)
+     * ==========================================================
+     *
+     * These colors are updated every frame during animation based on each vertex's
+     * current Y position (height). This creates dynamic color changes as the fabric
+     * moves, providing visual depth cues and enhancing the 3D effect.
+     *
+     * HEIGHT FACTOR CALCULATION:
+     * heightFactor = (currentY + amplitude) / (amplitude * 2)
+     * - Range: [0, 1] where 0 = lowest point, 1 = highest point
+     * - Normalizes Y position relative to the total possible displacement range
+     *
+     * COLOR MAPPING FORMULA:
+     * - Red:   base + (heightFactor * multiplier) → Higher points = more red
+     * - Blue:  base - (heightFactor * multiplier) → Higher points = less blue
+     *
+     * VISUAL EFFECT:
+     * - Creates "hot spots" where fabric rises (more red/orange)
+     * - Creates "cool spots" where fabric sinks (more blue)
+     * - Enhances perception of fabric movement and 3D depth
+     * - Simulates lighting effects where raised areas appear warmer
+     */
     heightMapping: {
       red: {
-        base: 0.2,
-        multiplier: 0.6,
+        base: 0.4, // Brighter minimum red value for lowest points (was 0.2)
+        multiplier: 0.5, // How much red increases with height (was 0.6)
       },
       blue: {
-        base: 0.8,
-        multiplier: 0.3,
+        base: 1.0, // Maximum blue value for lowest points (was 0.8)
+        multiplier: 0.4, // How much blue decreases with height (was 0.3)
       },
     },
   },
@@ -260,19 +298,40 @@ export default function TIN({
       }
     }
 
-    // Generate colors based on position
+    /**
+     * STATIC COLOR GENERATION - POSITION-BASED COLOR ASSIGNMENT
+     * =========================================================
+     *
+     * This section assigns initial colors to each vertex based on its position
+     * in the XZ plane. These colors create a static gradient pattern across
+     * the fabric surface that remains constant throughout the animation.
+     *
+     * COORDINATE NORMALIZATION:
+     * - normalizedX: Maps X position from [-width/2, width/2] to [0, 1]
+     * - normalizedZ: Maps Z position from [-height/2, height/2] to [0, 1]
+     *
+     * COLOR CALCULATION:
+     * Each vertex gets RGB values calculated using the formulas defined in TIN_CONFIG.colors.baseColor
+     * This creates a warm-to-cool gradient from left to right with depth variation.
+     */
     points.forEach(point => {
-      const normalizedX = (point.x + width / 2) / width;
-      const normalizedZ = (point.z + height / 2) / height;
+      // Normalize coordinates to [0, 1] range for color calculation
+      const normalizedX = (point.x + width / 2) / width; // Left=0, Right=1
+      const normalizedZ = (point.z + height / 2) / height; // Back=0, Front=1
 
-      colors.push(
+      // Calculate RGB components using position-based formulas
+      const redComponent =
         TIN_CONFIG.colors.baseColor.red.base +
-          normalizedX * TIN_CONFIG.colors.baseColor.red.multiplier, // Red component
+        normalizedX * TIN_CONFIG.colors.baseColor.red.multiplier; // Increases from left to right
+      const greenComponent =
         TIN_CONFIG.colors.baseColor.green.base +
-          normalizedZ * TIN_CONFIG.colors.baseColor.green.multiplier, // Green component
+        normalizedZ * TIN_CONFIG.colors.baseColor.green.multiplier; // Varies with depth
+      const blueComponent =
         TIN_CONFIG.colors.baseColor.blue.base -
-          normalizedX * TIN_CONFIG.colors.baseColor.blue.multiplier // Blue component
-      );
+        normalizedX * TIN_CONFIG.colors.baseColor.blue.multiplier; // Decreases from left to right
+
+      // Store RGB values for this vertex
+      colors.push(redComponent, greenComponent, blueComponent);
     });
 
     geom.setIndex(indices);
@@ -548,21 +607,43 @@ export default function TIN({
         positions.setY(i, newY);
 
         /**
-         * DYNAMIC COLOR MAPPING
-         * Maps height to color for visual depth perception
-         * heightFactor ∈ [0,1] where 0=lowest, 1=highest point
+         * DYNAMIC COLOR MAPPING - HEIGHT-BASED COLOR UPDATES
+         * ==================================================
+         *
+         * This section updates vertex colors every frame based on the current
+         * Y position (height) of each vertex. This creates dynamic color changes
+         * that enhance the perception of fabric movement and 3D depth.
+         *
+         * HEIGHT FACTOR CALCULATION:
+         * heightFactor = (currentY + amplitude) / (amplitude * 2)
+         * - Maps Y position from [-amplitude, +amplitude] to [0, 1]
+         * - 0 = lowest possible point (fabric sinks)
+         * - 1 = highest possible point (fabric rises)
+         *
+         * COLOR MAPPING STRATEGY:
+         * - Red component: Increases with height (warmer colors for raised areas)
+         * - Blue component: Decreases with height (cooler colors for lowered areas)
+         * - Green component: Remains constant (preserves base color variation)
+         *
+         * VISUAL EFFECT:
+         * Creates "hot spots" where fabric rises and "cool spots" where it sinks,
+         * simulating realistic lighting effects and enhancing 3D depth perception.
          */
         const heightFactor = (newY + amplitude) / (amplitude * 2);
+
+        // Update red component: higher points = more red (warmer)
         colors.setX(
           i,
           TIN_CONFIG.colors.heightMapping.red.base +
             heightFactor * TIN_CONFIG.colors.heightMapping.red.multiplier
-        ); // Red component varies with height
+        );
+
+        // Update blue component: higher points = less blue (warmer)
         colors.setZ(
           i,
           TIN_CONFIG.colors.heightMapping.blue.base -
             heightFactor * TIN_CONFIG.colors.heightMapping.blue.multiplier
-        ); // Blue component inversely varies
+        );
       }
 
       // Mark geometry attributes as needing GPU update
