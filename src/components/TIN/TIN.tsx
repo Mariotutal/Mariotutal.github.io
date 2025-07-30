@@ -40,7 +40,7 @@ const TIN_CONFIG = {
     // Default mesh dimensions
     defaultWidth: 20,
     defaultHeight: 20,
-    defaultResolution: 25, // Reduced from 50 to make lines wider (doubled line width)
+    defaultResolution: 25,
     defaultAmplitude: 2,
     defaultSpeed: 0.5,
 
@@ -72,16 +72,16 @@ const TIN_CONFIG = {
      */
     baseColor: {
       red: {
-        base: 0.4, // Brighter minimum red value (was 0.2)
-        multiplier: 0.5, // How much red increases across X-axis (was 0.6)
+        base: 0.4, // Brighter minimum red value
+        multiplier: 0.5, // How much red increases across X-axis
       },
       green: {
-        base: 0.6, // Brighter base green value (was 0.4)
-        multiplier: 0.4, // How much green varies with Z position (was 0.4)
+        base: 0.6, // Brighter base green value
+        multiplier: 0.4, // How much green varies with Z position
       },
       blue: {
-        base: 1.0, // Maximum blue value (was 0.8)
-        multiplier: 0.5, // How much blue decreases across X-axis (was 0.3)
+        base: 1.0, // Maximum blue value
+        multiplier: 0.5, // How much blue decreases across X-axis
       },
     },
 
@@ -110,12 +110,12 @@ const TIN_CONFIG = {
      */
     heightMapping: {
       red: {
-        base: 0.4, // Brighter minimum red value for lowest points (was 0.2)
-        multiplier: 0.5, // How much red increases with height (was 0.6)
+        base: 0.4, // Brighter minimum red value for lowest points
+        multiplier: 0.5, // How much red increases with height
       },
       blue: {
-        base: 1.0, // Maximum blue value for lowest points (was 0.8)
-        multiplier: 0.4, // How much blue decreases with height (was 0.3)
+        base: 1.0, // Maximum blue value for lowest points
+        multiplier: 0.4, // How much blue decreases with height
       },
     },
   },
