@@ -30,7 +30,7 @@
   border-radius: 12px;
   padding: 20px;
   min-width: 250px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(1px);
   animation: slideIn 0.3s ease;
 }
 

@@ -20,6 +20,215 @@ import { useRef, useMemo, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+/**
+ * TIN CONFIGURATION OBJECT
+ * ========================
+ *
+ * This object contains all hardcoded values, mathematical constants, colors,
+ * and configuration parameters used throughout the TIN component.
+ *
+ * ORGANIZATION:
+ * - mesh: Geometry and mesh-related constants
+ * - colors: Color generation and mapping parameters
+ * - wind: Wind simulation mathematical constants
+ * - material: Material properties and rendering settings
+ * - animation: Animation timing and control parameters
+ */
+const TIN_CONFIG = {
+  // Mesh generation and geometry constants
+  mesh: {
+    // Default mesh dimensions
+    defaultWidth: 20,
+    defaultHeight: 20,
+    defaultResolution: 25,
+    defaultAmplitude: 2,
+    defaultSpeed: 0.5,
+
+    // Mesh irregularity parameters
+    randomOffset: 0.3,
+
+    // Mesh rotation (lays flat on XZ plane)
+    rotationX: -Math.PI / 2,
+  },
+
+  // Color generation and mapping parameters
+  colors: {
+    /**
+     * INITIAL COLOR GENERATION (Static Position-Based Colors)
+     * ======================================================
+     *
+     * These colors are assigned once when the mesh is created, based on each vertex's
+     * position in the XZ plane. This creates a static color gradient across the fabric.
+     *
+     * COLOR MAPPING FORMULA:
+     * - Red:   base + (normalizedX * multiplier) → Creates horizontal gradient
+     * - Green: base + (normalizedZ * multiplier) → Creates depth gradient
+     * - Blue:  base - (normalizedX * multiplier) → Creates inverse horizontal gradient
+     *
+     * VISUAL EFFECT:
+     * - Creates a warm-to-cool color transition from left to right
+     * - Adds depth perception with green component varying by Z position
+     * - Results in a natural fabric-like color variation
+     */
+    baseColor: {
+      red: {
+        base: 0.4, // Brighter minimum red value
+        multiplier: 0.5, // How much red increases across X-axis
+      },
+      green: {
+        base: 0.6, // Brighter base green value
+        multiplier: 0.4, // How much green varies with Z position
+      },
+      blue: {
+        base: 1.0, // Maximum blue value
+        multiplier: 0.5, // How much blue decreases across X-axis
+      },
+    },
+
+    /**
+     * DYNAMIC HEIGHT-BASED COLOR MAPPING (Animation-Time Colors)
+     * ==========================================================
+     *
+     * These colors are updated every frame during animation based on each vertex's
+     * current Y position (height). This creates dynamic color changes as the fabric
+     * moves, providing visual depth cues and enhancing the 3D effect.
+     *
+     * HEIGHT FACTOR CALCULATION:
+     * heightFactor = (currentY + amplitude) / (amplitude * 2)
+     * - Range: [0, 1] where 0 = lowest point, 1 = highest point
+     * - Normalizes Y position relative to the total possible displacement range
+     *
+     * COLOR MAPPING FORMULA:
+     * - Red:   base + (heightFactor * multiplier) → Higher points = more red
+     * - Blue:  base - (heightFactor * multiplier) → Higher points = less blue
+     *
+     * VISUAL EFFECT:
+     * - Creates "hot spots" where fabric rises (more red/orange)
+     * - Creates "cool spots" where fabric sinks (more blue)
+     * - Enhances perception of fabric movement and 3D depth
+     * - Simulates lighting effects where raised areas appear warmer
+     */
+    heightMapping: {
+      red: {
+        base: 0.4, // Brighter minimum red value for lowest points
+        multiplier: 0.5, // How much red increases with height
+      },
+      blue: {
+        base: 1.0, // Maximum blue value for lowest points
+        multiplier: 0.4, // How much blue decreases with height
+      },
+    },
+  },
+
+  // Wind simulation mathematical constants
+  wind: {
+    // Edge damping parameters
+    edgeDamping: {
+      minimum: 0.15,
+      falloffPower: 2,
+    },
+
+    // Wind direction oscillation parameters
+    direction: {
+      x: {
+        frequency: 0.3,
+        amplitude: 0.7,
+        offset: 0.3,
+      },
+      z: {
+        frequency: 0.2,
+        amplitude: 0.5,
+        offset: 0.5,
+      },
+    },
+
+    // Primary wind wave parameters
+    mainWave: {
+      xSpatialFrequency: 1.5,
+      zSpatialFrequency: 1.2,
+      temporalFrequency: 2.5,
+    },
+
+    // Wind gust parameters
+    gust: {
+      strength: {
+        frequency: 0.8,
+        amplitude: 0.5,
+        offset: 0.5,
+      },
+      pattern: {
+        xSpatialFrequency: 2,
+        zSpatialFrequency: 1.8,
+        xTemporalFrequency: 4,
+        zTemporalFrequency: 3.5,
+        amplitudeMultiplier: 0.8,
+      },
+    },
+
+    // Turbulence parameters
+    turbulence: {
+      primary: {
+        xSpatialFrequency: 6,
+        zSpatialFrequency: 4,
+        xTemporalFrequency: 8,
+        zTemporalFrequency: 6,
+        amplitude: 0.2,
+      },
+      secondary: {
+        xSpatialFrequency: 4,
+        zSpatialFrequency: 3,
+        temporalFrequency: 9,
+        amplitude: 0.15,
+      },
+    },
+
+    // Pressure wave parameters
+    pressure: {
+      xSpatialFrequency: 0.8,
+      zSpatialFrequency: 0.6,
+      xTemporalFrequency: 1.5,
+      zTemporalFrequency: 1.2,
+      amplitude: 0.4,
+    },
+
+    // Wind intensity modulation parameters
+    intensity: {
+      primary: {
+        frequency: 0.6,
+        amplitude: 0.3,
+        offset: 0.7,
+      },
+      lull: {
+        frequency: 0.4,
+        amplitude: 0.2,
+        offset: 0.8,
+      },
+    },
+  },
+
+  // Material properties and rendering settings
+  material: {
+    // Opacity settings
+    opacity: {
+      wireframe: 0.7,
+      normal: 0.9,
+    },
+
+    // Material properties
+    properties: {
+      vertexColors: true,
+      side: THREE.DoubleSide,
+      transparent: true,
+    },
+  },
+
+  // Animation and timing parameters
+  animation: {
+    // Time scaling for animation speed
+    timeScaling: 1,
+  },
+} as const;
+
 interface TINProps {
   width?: number;
   height?: number;
@@ -30,11 +239,11 @@ interface TINProps {
 }
 
 export default function TIN({
-  width = 20,
-  height = 20,
-  resolution = 50,
-  amplitude = 2,
-  speed = 0.5,
+  width = TIN_CONFIG.mesh.defaultWidth,
+  height = TIN_CONFIG.mesh.defaultHeight,
+  resolution = TIN_CONFIG.mesh.defaultResolution,
+  amplitude = TIN_CONFIG.mesh.defaultAmplitude,
+  speed = TIN_CONFIG.mesh.defaultSpeed,
   wireframe = false,
 }: TINProps) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -52,9 +261,8 @@ export default function TIN({
         const zPos = (z / resolution) * height - height / 2;
 
         // Add some randomness to create irregular network
-        const randomOffset = 0.3;
-        const xOffset = (Math.random() - 0.5) * randomOffset;
-        const zOffset = (Math.random() - 0.5) * randomOffset;
+        const xOffset = (Math.random() - 0.5) * TIN_CONFIG.mesh.randomOffset;
+        const zOffset = (Math.random() - 0.5) * TIN_CONFIG.mesh.randomOffset;
 
         pts.push(new THREE.Vector3(xPos + xOffset, 0, zPos + zOffset));
       }
@@ -90,16 +298,40 @@ export default function TIN({
       }
     }
 
-    // Generate colors based on position
+    /**
+     * STATIC COLOR GENERATION - POSITION-BASED COLOR ASSIGNMENT
+     * =========================================================
+     *
+     * This section assigns initial colors to each vertex based on its position
+     * in the XZ plane. These colors create a static gradient pattern across
+     * the fabric surface that remains constant throughout the animation.
+     *
+     * COORDINATE NORMALIZATION:
+     * - normalizedX: Maps X position from [-width/2, width/2] to [0, 1]
+     * - normalizedZ: Maps Z position from [-height/2, height/2] to [0, 1]
+     *
+     * COLOR CALCULATION:
+     * Each vertex gets RGB values calculated using the formulas defined in TIN_CONFIG.colors.baseColor
+     * This creates a warm-to-cool gradient from left to right with depth variation.
+     */
     points.forEach(point => {
-      const normalizedX = (point.x + width / 2) / width;
-      const normalizedZ = (point.z + height / 2) / height;
+      // Normalize coordinates to [0, 1] range for color calculation
+      const normalizedX = (point.x + width / 2) / width; // Left=0, Right=1
+      const normalizedZ = (point.z + height / 2) / height; // Back=0, Front=1
 
-      colors.push(
-        0.2 + normalizedX * 0.6, // Red component
-        0.4 + normalizedZ * 0.4, // Green component
-        0.8 - normalizedX * 0.3 // Blue component
-      );
+      // Calculate RGB components using position-based formulas
+      const redComponent =
+        TIN_CONFIG.colors.baseColor.red.base +
+        normalizedX * TIN_CONFIG.colors.baseColor.red.multiplier; // Increases from left to right
+      const greenComponent =
+        TIN_CONFIG.colors.baseColor.green.base +
+        normalizedZ * TIN_CONFIG.colors.baseColor.green.multiplier; // Varies with depth
+      const blueComponent =
+        TIN_CONFIG.colors.baseColor.blue.base -
+        normalizedX * TIN_CONFIG.colors.baseColor.blue.multiplier; // Decreases from left to right
+
+      // Store RGB values for this vertex
+      colors.push(redComponent, greenComponent, blueComponent);
     });
 
     geom.setIndex(indices);
@@ -158,7 +390,11 @@ export default function TIN({
        * - At edges (r=1): damping = 0.15 (15% movement)
        * - Quadratic ensures smooth transition
        */
-      const edgeDamping = Math.max(0.15, 1 - Math.pow(distanceFromCenter, 2));
+      const edgeDamping = Math.max(
+        TIN_CONFIG.wind.edgeDamping.minimum,
+        1 -
+          Math.pow(distanceFromCenter, TIN_CONFIG.wind.edgeDamping.falloffPower)
+      );
 
       /**
        * STEP 4: DYNAMIC WIND DIRECTION VECTORS
@@ -172,8 +408,14 @@ export default function TIN({
        * - Range: [0.0, 1.0] → Wind varies from no depth to full depth movement
        * - Different frequency (0.2) creates complex, non-periodic wind patterns
        */
-      const windDirectionX = Math.sin(time * 0.3) * 0.7 + 0.3; // Varying wind from left to right
-      const windDirectionZ = Math.cos(time * 0.2) * 0.5 + 0.5; // Varying wind front to back
+      const windDirectionX =
+        Math.sin(time * TIN_CONFIG.wind.direction.x.frequency) *
+          TIN_CONFIG.wind.direction.x.amplitude +
+        TIN_CONFIG.wind.direction.x.offset;
+      const windDirectionZ =
+        Math.cos(time * TIN_CONFIG.wind.direction.z.frequency) *
+          TIN_CONFIG.wind.direction.z.amplitude +
+        TIN_CONFIG.wind.direction.z.offset;
 
       /**
        * STEP 5: PRIMARY WAVE EQUATION
@@ -188,9 +430,13 @@ export default function TIN({
        * This creates a traveling wave that follows wind direction
        */
       const mainWind = Math.sin(
-        normalizedX * windDirectionX * 1.5 +
-          normalizedZ * windDirectionZ * 1.2 +
-          time * 2.5
+        normalizedX *
+          windDirectionX *
+          TIN_CONFIG.wind.mainWave.xSpatialFrequency +
+          normalizedZ *
+            windDirectionZ *
+            TIN_CONFIG.wind.mainWave.zSpatialFrequency +
+          time * TIN_CONFIG.wind.mainWave.temporalFrequency
       );
 
       /**
@@ -209,11 +455,23 @@ export default function TIN({
        * Final: W₂ = gustPattern × gustStrength × 0.8
        * The 0.8 factor limits gust amplitude relative to main wind
        */
-      const gustStrength = Math.sin(time * 0.8) * 0.5 + 0.5; // Gust intensity varies
+      const gustStrength =
+        Math.sin(time * TIN_CONFIG.wind.gust.strength.frequency) *
+          TIN_CONFIG.wind.gust.strength.amplitude +
+        TIN_CONFIG.wind.gust.strength.offset;
       const gustPattern =
-        Math.sin(normalizedX * 2 + time * 4) *
-        Math.cos(normalizedZ * 1.8 + time * 3.5);
-      const windGust = gustPattern * gustStrength * 0.8;
+        Math.sin(
+          normalizedX * TIN_CONFIG.wind.gust.pattern.xSpatialFrequency +
+            time * TIN_CONFIG.wind.gust.pattern.xTemporalFrequency
+        ) *
+        Math.cos(
+          normalizedZ * TIN_CONFIG.wind.gust.pattern.zSpatialFrequency +
+            time * TIN_CONFIG.wind.gust.pattern.zTemporalFrequency
+        );
+      const windGust =
+        gustPattern *
+        gustStrength *
+        TIN_CONFIG.wind.gust.pattern.amplitudeMultiplier;
 
       /**
        * STEP 7: TURBULENCE MODELING
@@ -232,11 +490,22 @@ export default function TIN({
        * Total turbulence = T₁ + T₂ (linear superposition)
        */
       const turbulence1 =
-        Math.sin(normalizedX * 6 + time * 8) *
-        Math.cos(normalizedZ * 4 + time * 6) *
-        0.2;
+        Math.sin(
+          normalizedX * TIN_CONFIG.wind.turbulence.primary.xSpatialFrequency +
+            time * TIN_CONFIG.wind.turbulence.primary.xTemporalFrequency
+        ) *
+        Math.cos(
+          normalizedZ * TIN_CONFIG.wind.turbulence.primary.zSpatialFrequency +
+            time * TIN_CONFIG.wind.turbulence.primary.zTemporalFrequency
+        ) *
+        TIN_CONFIG.wind.turbulence.primary.amplitude;
       const turbulence2 =
-        Math.cos(normalizedX * 4 + normalizedZ * 3 + time * 9) * 0.15;
+        Math.cos(
+          normalizedX * TIN_CONFIG.wind.turbulence.secondary.xSpatialFrequency +
+            normalizedZ *
+              TIN_CONFIG.wind.turbulence.secondary.zSpatialFrequency +
+            time * TIN_CONFIG.wind.turbulence.secondary.temporalFrequency
+        ) * TIN_CONFIG.wind.turbulence.secondary.amplitude;
       const windTurbulence = turbulence1 + turbulence2;
 
       /**
@@ -249,9 +518,15 @@ export default function TIN({
        * - Product creates moving pressure cells across fabric surface
        */
       const pressureWave =
-        Math.sin(normalizedX * 0.8 + time * 1.5) *
-        Math.cos(normalizedZ * 0.6 + time * 1.2) *
-        0.4;
+        Math.sin(
+          normalizedX * TIN_CONFIG.wind.pressure.xSpatialFrequency +
+            time * TIN_CONFIG.wind.pressure.xTemporalFrequency
+        ) *
+        Math.cos(
+          normalizedZ * TIN_CONFIG.wind.pressure.zSpatialFrequency +
+            time * TIN_CONFIG.wind.pressure.zTemporalFrequency
+        ) *
+        TIN_CONFIG.wind.pressure.amplitude;
 
       /**
        * STEP 9: WIND INTENSITY MODULATION
@@ -265,8 +540,14 @@ export default function TIN({
        * - Range: [0.6, 1.0] → Periodic calm moments
        * - Different phase (cosine vs sine) creates complex intensity patterns
        */
-      const windIntensity = Math.sin(time * 0.6) * 0.3 + 0.7; // Wind strength varies
-      const windLull = Math.cos(time * 0.4) * 0.2 + 0.8; // Periodic calm moments
+      const windIntensity =
+        Math.sin(time * TIN_CONFIG.wind.intensity.primary.frequency) *
+          TIN_CONFIG.wind.intensity.primary.amplitude +
+        TIN_CONFIG.wind.intensity.primary.offset;
+      const windLull =
+        Math.cos(time * TIN_CONFIG.wind.intensity.lull.frequency) *
+          TIN_CONFIG.wind.intensity.lull.amplitude +
+        TIN_CONFIG.wind.intensity.lull.offset;
 
       /**
        * STEP 10: WAVE SUPERPOSITION AND FINAL CALCULATION
@@ -303,7 +584,7 @@ export default function TIN({
    */
   useFrame((state, delta) => {
     // Update time parameter for wave progression (speed controls animation rate)
-    timeRef.current += delta * speed;
+    timeRef.current += delta * speed * TIN_CONFIG.animation.timeScaling;
 
     if (meshRef.current) {
       const positions = meshRef.current.geometry.attributes.position;
@@ -326,13 +607,43 @@ export default function TIN({
         positions.setY(i, newY);
 
         /**
-         * DYNAMIC COLOR MAPPING
-         * Maps height to color for visual depth perception
-         * heightFactor ∈ [0,1] where 0=lowest, 1=highest point
+         * DYNAMIC COLOR MAPPING - HEIGHT-BASED COLOR UPDATES
+         * ==================================================
+         *
+         * This section updates vertex colors every frame based on the current
+         * Y position (height) of each vertex. This creates dynamic color changes
+         * that enhance the perception of fabric movement and 3D depth.
+         *
+         * HEIGHT FACTOR CALCULATION:
+         * heightFactor = (currentY + amplitude) / (amplitude * 2)
+         * - Maps Y position from [-amplitude, +amplitude] to [0, 1]
+         * - 0 = lowest possible point (fabric sinks)
+         * - 1 = highest possible point (fabric rises)
+         *
+         * COLOR MAPPING STRATEGY:
+         * - Red component: Increases with height (warmer colors for raised areas)
+         * - Blue component: Decreases with height (cooler colors for lowered areas)
+         * - Green component: Remains constant (preserves base color variation)
+         *
+         * VISUAL EFFECT:
+         * Creates "hot spots" where fabric rises and "cool spots" where it sinks,
+         * simulating realistic lighting effects and enhancing 3D depth perception.
          */
         const heightFactor = (newY + amplitude) / (amplitude * 2);
-        colors.setX(i, 0.2 + heightFactor * 0.6); // Red component varies with height
-        colors.setZ(i, 0.8 - heightFactor * 0.3); // Blue component inversely varies
+
+        // Update red component: higher points = more red (warmer)
+        colors.setX(
+          i,
+          TIN_CONFIG.colors.heightMapping.red.base +
+            heightFactor * TIN_CONFIG.colors.heightMapping.red.multiplier
+        );
+
+        // Update blue component: higher points = less blue (warmer)
+        colors.setZ(
+          i,
+          TIN_CONFIG.colors.heightMapping.blue.base -
+            heightFactor * TIN_CONFIG.colors.heightMapping.blue.multiplier
+        );
       }
 
       // Mark geometry attributes as needing GPU update
@@ -349,13 +660,21 @@ export default function TIN({
   });
 
   return (
-    <mesh ref={meshRef} geometry={geometry} rotation-x={-Math.PI / 2}>
+    <mesh
+      ref={meshRef}
+      geometry={geometry}
+      rotation-x={TIN_CONFIG.mesh.rotationX}
+    >
       <meshPhongMaterial
         ref={materialRef}
-        vertexColors
-        side={THREE.DoubleSide}
-        transparent
-        opacity={wireframe ? 0.7 : 0.9}
+        vertexColors={TIN_CONFIG.material.properties.vertexColors}
+        side={TIN_CONFIG.material.properties.side}
+        transparent={TIN_CONFIG.material.properties.transparent}
+        opacity={
+          wireframe
+            ? TIN_CONFIG.material.opacity.wireframe
+            : TIN_CONFIG.material.opacity.normal
+        }
         wireframe={wireframe}
       />
     </mesh>
