@@ -205,11 +205,31 @@
     --slide-size: 90%;
     --slide-height: 350px;
     --slide-spacing: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
   }
 
-  /* Short viewports: cap slide height so overlay title stays visible */
+  .viewport {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  .container {
+    height: 100%;
+    align-items: stretch;
+  }
+
+  /* Slides and cards fill all available height */
   .slide {
-    max-height: min(350px, 45dvh);
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .slideContent,
@@ -220,7 +240,8 @@
 
   .controls {
     gap: 0.6rem;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
+    flex-shrink: 0;
   }
 
   .button {

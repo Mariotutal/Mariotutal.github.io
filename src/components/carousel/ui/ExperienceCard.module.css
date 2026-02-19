@@ -157,6 +157,8 @@
   .experienceCard {
     padding: 12px;
     gap: 12px;
+    min-height: 0;
+    flex: 1;
   }
 
   .jobTitle {
