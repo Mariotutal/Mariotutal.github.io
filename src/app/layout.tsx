@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'TIN Simulation - Portfolio',
+  title: 'Mario Vargas - Portfolio',
   description:
     'Interactive Triangular Irregular Network (TIN) with movement simulation using Three.js and Next.js',
 };
