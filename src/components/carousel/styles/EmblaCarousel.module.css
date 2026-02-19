@@ -2,17 +2,22 @@
 
 /* Carousel Container */
 .embla {
+  width: 100%;
   max-width: 48rem;
-  margin: auto;
+  min-width: 0;
+  margin: 0 auto;
   --slide-height: 19rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
+  box-sizing: border-box;
 }
 
 /* Viewport */
 .viewport {
   overflow: hidden;
   padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Container */
@@ -200,11 +205,43 @@
     --slide-size: 90%;
     --slide-height: 350px;
     --slide-spacing: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .viewport {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  .container {
+    height: 100%;
+    align-items: stretch;
+  }
+
+  /* Slides and cards fill all available height */
+  .slide {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slideContent,
+  .slideNumber {
+    height: min(350px, 45dvh);
+    min-height: 200px;
   }
 
   .controls {
     gap: 0.6rem;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
+    flex-shrink: 0;
   }
 
   .button {
