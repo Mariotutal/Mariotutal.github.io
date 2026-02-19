@@ -136,21 +136,44 @@
 
 @media (--max-mobile) {
   .controls {
-    top: auto;
-    right: auto;
-    bottom: calc(20px + var(--safe-area-inset-bottom));
-    left: calc(20px + var(--safe-area-inset-left));
+    top: calc(20px + var(--safe-area-inset-top));
+    right: calc(20px + var(--safe-area-inset-right));
+    bottom: auto;
+    left: auto;
+  }
+
+  .toggle {
+    position: relative;
+    z-index: 1001;
   }
 
   .panel {
     position: fixed;
-    top: auto;
-    right: max(16px, var(--safe-area-inset-right));
-    bottom: calc(44px + 20px + var(--safe-area-inset-bottom));
-    left: max(16px, var(--safe-area-inset-left));
-    min-width: unset;
-    max-height: 60vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: none;
+    border-radius: 0;
+    border: none;
+    padding: calc(44px + 20px + var(--safe-area-inset-top))
+      max(16px, var(--safe-area-inset-right))
+      max(20px, var(--safe-area-inset-bottom))
+      max(16px, var(--safe-area-inset-left));
     overflow-y: auto;
-    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+    animation: panelSlideUp 0.3s ease;
+  }
+}
+
+@keyframes panelSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
