@@ -172,8 +172,6 @@ export default function Scene() {
         onAxisToggle={handleAxisToggle}
         onReset={handleReset}
       />
-
-      {/* <Overlay /> */}
     </>
   );
 }
