@@ -2,17 +2,22 @@
 
 /* Carousel Container */
 .embla {
+  width: 100%;
   max-width: 48rem;
-  margin: auto;
+  min-width: 0;
+  margin: 0 auto;
   --slide-height: 19rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
+  box-sizing: border-box;
 }
 
 /* Viewport */
 .viewport {
   overflow: hidden;
   padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Container */
@@ -200,6 +205,17 @@
     --slide-size: 90%;
     --slide-height: 350px;
     --slide-spacing: 0.8rem;
+  }
+
+  /* Short viewports: cap slide height so overlay title stays visible */
+  .slide {
+    max-height: min(350px, 45dvh);
+  }
+
+  .slideContent,
+  .slideNumber {
+    height: min(350px, 45dvh);
+    min-height: 200px;
   }
 
   .controls {

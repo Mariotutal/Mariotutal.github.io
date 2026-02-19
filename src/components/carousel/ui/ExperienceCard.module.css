@@ -1,3 +1,5 @@
+@import '../../../styles/breakpoints.css';
+
 .experienceCard {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -9,6 +11,7 @@
   gap: 20px;
   backdrop-filter: blur(1px);
   transition: all 0.3s ease;
+  overflow-y: auto;
 }
 
 .experienceCard:hover {
@@ -122,7 +125,7 @@
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (--max-tablet) {
   .experienceCard {
     padding: 16px;
     gap: 16px;
@@ -147,5 +150,28 @@
 
   .toolTag {
     font-size: 0.7rem;
+  }
+}
+
+@media (--max-mobile) {
+  .experienceCard {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .jobTitle {
+    font-size: 1rem;
+  }
+
+  .companyName {
+    font-size: 0.95rem;
+  }
+
+  .responsibilityItem {
+    font-size: 0.75rem;
+  }
+
+  .toolTag {
+    font-size: 0.65rem;
   }
 }
