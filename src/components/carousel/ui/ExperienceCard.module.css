@@ -162,18 +162,18 @@
   }
 
   .jobTitle {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
 
   .companyName {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .responsibilityItem {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
 
   .toolTag {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 }

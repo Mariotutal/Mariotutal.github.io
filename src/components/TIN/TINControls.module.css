@@ -145,6 +145,20 @@
   .toggle {
     position: relative;
     z-index: 1001;
+    font-size: 17px;
+  }
+
+  .panel h3 {
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+
+  .control label {
+    font-size: 15px;
+  }
+
+  .resetBtn {
+    font-size: 15px;
   }
 
   .panel {

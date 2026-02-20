@@ -40,20 +40,6 @@
   color: #ffffff;
 }
 
-@media (--tablet) {
-  .text {
-    font-size: 36px;
-    padding-bottom: 1rem;
-  }
-}
-
-@media (--mobile) {
-  .text {
-    font-size: 24px;
-    padding-bottom: 0.75rem;
-  }
-}
-
 /* Experience section: centered in the viewport below the name */
 .experienceSection {
   flex: 1;
@@ -89,13 +75,23 @@
 }
 
 @media (--max-mobile) {
+  .container {
+    font-size: 1.75rem;
+    margin-top: 1.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
   .experienceSection {
     width: 98%;
     align-items: stretch;
   }
 
   .sectionTitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 8px;
   }
 }
