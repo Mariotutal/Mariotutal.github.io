@@ -17,8 +17,8 @@ export default function TINControls({
   onReset,
 }: TINControlsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [wireframe, setWireframe] = useState(false);
-  const [showAxis, setShowAxis] = useState(true);
+  const [wireframe, setWireframe] = useState(true);
+  const [showAxis, setShowAxis] = useState(false);
 
   const handleWireframeToggle = () => {
     const newWireframe = !wireframe;
@@ -73,10 +73,10 @@ export default function TINControls({
             <label>Speed:</label>
             <input
               type="range"
-              min="0.1"
+              min="0.01"
               max="2"
-              step="0.1"
-              defaultValue="0.4"
+              step="0.01"
+              defaultValue="0.02"
               onChange={e =>
                 onParameterChange('speed', parseFloat(e.target.value))
               }
