@@ -4,7 +4,7 @@ import { CarouselButton, PrevIcon, NextIcon } from './CarouselButton';
 import { usePrevNextButtons } from '../hooks/usePrevNextButtons';
 import { useDotButton } from '../hooks/useDotButton';
 import { EmblaCarouselType } from 'embla-carousel';
-import styles from '../styles/EmblaCarousel.module.css';
+import styles from '../EmblaCarousel.module.css';
 
 interface CarouselControlsProps {
   emblaApi: EmblaCarouselType | undefined;

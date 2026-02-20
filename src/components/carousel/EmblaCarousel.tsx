@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { CarouselControls } from './ui/CarouselControls';
 import ExperienceCard from './ui/ExperienceCard';
 import { CarouselProps } from './types';
-import styles from './styles/EmblaCarousel.module.css';
+import styles from './EmblaCarousel.module.css';
 
 export const EmblaCarousel = memo<CarouselProps>(({ experiences, options }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);

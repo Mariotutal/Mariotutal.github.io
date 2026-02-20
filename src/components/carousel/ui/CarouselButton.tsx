@@ -1,7 +1,7 @@
 'use client';
 
 import { ComponentPropsWithRef, forwardRef } from 'react';
-import styles from '../styles/EmblaCarousel.module.css';
+import styles from '../EmblaCarousel.module.css';
 
 interface CarouselButtonProps extends ComponentPropsWithRef<'button'> {
   variant?: 'prev' | 'next' | 'dot';
