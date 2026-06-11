@@ -34,7 +34,7 @@ PI_MODEL=ollama/qwen3.6-35b-64k:latest npm run ai:improve
 
 - Base branch: `main`
 - Branch prefix: `pi/improve-portfolio`
-- Model: `ollama/gpt-oss:20b`
+- Model: `ollama/qwen3.6-35b-64k:latest`
 - Thinking: `off`
 - Dependency setup: `npm ci`
 - Validation:
