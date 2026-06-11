@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "ai:improve": "bash scripts/pi-pr-harness.sh",
+    "ai:improve:pr": "CREATE_PR=1 bash scripts/pi-pr-harness.sh"
   },
   "dependencies": {
     "@react-three/drei": "^10.5.0",
